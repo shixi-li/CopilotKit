@@ -477,6 +477,7 @@ describe("framework nav", () => {
     expect(sectionPages(navTree, "Intelligence Platform")).toEqual([
       "Enterprise Intelligence Platform",
       "Cloud-Hosted Enterprise Intelligence",
+      "Connect an Existing App to Hosted Intelligence",
       "Self-Hosting Enterprise Intelligence",
       "Enterprise Intelligence Architecture",
     ]);

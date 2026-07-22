@@ -35,8 +35,11 @@ Use the drawer when you want:
 - A self-contained, themeable UI that follows your app's light/dark theme
 - A mobile-ready off-canvas drawer with its own launcher
 
-It requires the Enterprise Intelligence Platform (threads are stored and synced
-server-side). <SignupLink surface="docs_drawer">Get a free developer account</SignupLink> to set that up.
+It requires the Enterprise Intelligence Platform because Threads are stored and
+synced server-side. If your app already has a working Runtime v2 endpoint,
+follow [Connect an Existing App to Hosted Intelligence](/premium/existing-app-hosted-intelligence)
+first. <SignupLink surface="docs_drawer">Get a free developer account</SignupLink>
+to create a hosted project.
 
 <OpsPlatformCTA
   variant="inline"
@@ -66,7 +69,10 @@ import "@copilotkit/react-core/v2/styles.css";
 
 export default function Page() {
   return (
-    <CopilotKitProvider runtimeUrl="/api/copilotkit" publicLicenseKey="ck_pub_...">
+    <CopilotKitProvider
+      runtimeUrl="/api/copilotkit"
+      useSingleEndpoint={false}
+    >
       <CopilotChatConfigurationProvider>
         <div style={{ display: "flex", height: "100dvh" }}>
           <CopilotThreadsDrawer />
@@ -119,12 +125,15 @@ Three bounded escape hatches pierce the boundary:
 
 ## License
 
-Threads require CopilotKit Intelligence. Without a license key, the drawer shows
-a locked view in place of the list.
+Threads require CopilotKit Intelligence. A cloud-hosted app gets its entitlement
+from the Intelligence project connected to the Runtime; it does not put a
+license token in browser code. Self-hosted and offline enterprise setups may use
+an explicit license token.
 
 ## Related
 
 - [Threads overview](/threads): understand the product and choose an implementation path
+- [Connect an Existing App to Hosted Intelligence](/premium/existing-app-hosted-intelligence): configure the Runtime and verify per-user persistence
 - [Headless Threads](/headless-threads): build a custom UI with the `useThreads` data layer
 - [Threads Drawer reference (React)](/reference/components/CopilotThreadsDrawer)
 - [CopilotChat](/prebuilt-components/chat): the chat the drawer connects to

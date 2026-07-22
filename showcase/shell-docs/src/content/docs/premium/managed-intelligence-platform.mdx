@@ -26,6 +26,8 @@ The hosted web app is the control surface for developers and administrators. End
 
 Use Cloud-Hosted Enterprise Intelligence when you want the fastest path to production. Use [Self-Hosting Enterprise Intelligence](/premium/self-hosting) when your organization needs the platform inside its own VPC, cluster, or data boundary.
 
+To connect an app that already has a working Runtime v2 endpoint, follow [Connect an Existing App to Hosted Intelligence](/premium/existing-app-hosted-intelligence).
+
 ## Login and workspace flow
 
 You sign in at [dashboard.operations.copilotkit.ai](https://dashboard.operations.copilotkit.ai). After login, choose or create the organization workspace you want to operate in. The ready page gives you two common paths:
@@ -47,11 +49,16 @@ Inside a project, the web app shows the conversation history connected to that p
 
 ## API keys
 
-Project API keys connect your runtime to the cloud-hosted project. The CLI provisions a project-scoped key during `create` and `project select`, writes it to `.env` as `INTELLIGENCE_API_KEY`, and records the selected project in `.copilotkit/project.json`.
+Project API keys connect your runtime to the cloud-hosted project. The CLI provisions a project-scoped key during `create` and `project select`, writes it to `.env` as `CPK_INTELLIGENCE_API_KEY`, and records the selected project in `.copilotkit/project.json`. It also writes the non-secret `CPK_TELEMETRY_ID` for analytics attribution. Managed setup does not issue or write `COPILOTKIT_LICENSE_TOKEN`.
 
 ![The Cloud-Hosted Enterprise Intelligence API keys page.](/images/enterprise-intelligence/managed-api-keys.png)
 
 When you create an API key in the web app, the plaintext token is shown once. Store it in your runtime environment, not in frontend code. Deleting a key invalidates any application still using it.
+
+If telemetry-identity setup fails, the CLI still commits the project and API
+key, removes stale telemetry identity, and warns that Runtime telemetry will
+stay anonymous. If key creation or local env writing fails, project selection
+does not replace the prior local project and credentials.
 
 ## Threads and conversation history
 
@@ -86,6 +93,7 @@ Your application code should stay focused on the CopilotKit SDK and runtime. The
 
 ## Next steps
 
+- **Connect an existing app:** [Connect an Existing App to Hosted Intelligence](/premium/existing-app-hosted-intelligence) — add one hosted project key and verified app-user identity to Runtime v2
 - **Use the CLI:** [CopilotKit CLI](/cli) — sign in, scaffold apps, select cloud-hosted projects, and write project configuration
 - **Add threads:** [Headless Threads](/headless-threads) — list, create, rename, archive, and delete persistent conversations in a custom UI
 - **Thread architecture:** [Threads & Persistence Architecture](/premium/threads-explained) — event replay, realtime sync, and thread lifecycle semantics
